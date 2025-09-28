@@ -5,7 +5,7 @@ go 1.25.1
 require (
 	github.com/gorilla/sessions v1.4.0
 	github.com/markbates/goth v1.82.0
-	github.com/plainkit/fonts v0.2.0
+	github.com/plainkit/fonts v0.3.0
 	github.com/plainkit/html v0.18.0
 )
 

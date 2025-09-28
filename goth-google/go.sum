@@ -18,6 +18,8 @@ github.com/markbates/goth v1.82.0 h1:8j/c34AjBSTNzO7zTsOyP5IYCQCMBTRBHAbBt/PI0bQ
 github.com/markbates/goth v1.82.0/go.mod h1:/DRlcq0pyqkKToyZjsL2KgiA1zbF1HIjE7u2uC79rUk=
 github.com/plainkit/fonts v0.2.0 h1:zyOBxpuJng7AgtIgfZqR3RjpK8jW8eqGfLTsAJd40D0=
 github.com/plainkit/fonts v0.2.0/go.mod h1:e1ad4b020DKdWxMyUn1cmIXWswSDakuMnBwBinMj9YI=
+github.com/plainkit/fonts v0.3.0 h1:yApzUEIfbQ/sRZkY26TYuVrl52FMxho69NcB3YRXfTY=
+github.com/plainkit/fonts v0.3.0/go.mod h1:/sRyH6iF3JNFy2rgQs3tAO3InCZxBexYaa4SNcuBl8k=
 github.com/plainkit/html v0.16.0 h1:jGxCuE7n5mLXzpSEH79zc9s+4R6zVPnfYsgYOg3vTVg=
 github.com/plainkit/html v0.16.0/go.mod h1:S/JgjPo2gBecfPy3J3i/EM+9lJehBsV4Z94nTUc3+8s=
 github.com/plainkit/html v0.18.0 h1:/YvCxVT4NgDUDd741pJviYsyUw/LgWcVncaj+JkBrlQ=
