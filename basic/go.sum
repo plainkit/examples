@@ -1,2 +1,4 @@
-github.com/plainkit/html v0.9.0 h1:QsFDzjfvmd9O2Uw7BK3PZTfIV+Tw3hsLDBvebuCHr8c=
-github.com/plainkit/html v0.9.0/go.mod h1:63DVpcbAvlLsDEzubaPzrzu3QHgTC43f0JShOt9/32s=
+github.com/plainkit/html v0.16.0 h1:jGxCuE7n5mLXzpSEH79zc9s+4R6zVPnfYsgYOg3vTVg=
+github.com/plainkit/html v0.16.0/go.mod h1:S/JgjPo2gBecfPy3J3i/EM+9lJehBsV4Z94nTUc3+8s=
+github.com/plainkit/html v0.18.0 h1:/YvCxVT4NgDUDd741pJviYsyUw/LgWcVncaj+JkBrlQ=
+github.com/plainkit/html v0.18.0/go.mod h1:G8xDVL5UAKqdrdB8HHwloRwl+w8UMqzsZ7GzC8/qAXE=

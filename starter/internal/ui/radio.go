@@ -55,14 +55,14 @@ func Radio(args ...interface{}) x.Component {
 	containerWithStates := containerClasses + " hover:[&>.checkmark]:bg-muted [&>input:checked~.checkmark]:bg-primary [&>input:checked~.checkmark]:border-primary [&>input:checked~.checkmark:after]:opacity-100 [&>input:focus-visible~.checkmark]:ring-[3px] [&>input:focus-visible~.checkmark]:ring-ring/50"
 
 	radioArgs := append([]x.InputArg{
-		x.Class(inputClasses),
-		x.InputType("radio"),
+		x.AClass(inputClasses),
+		x.AType("radio"),
 	}, state.baseArgs...)
 
-	return x.FormLabel(
-		x.Class(containerWithStates),
+	return x.Label(
+		x.AClass(containerWithStates),
 		x.Child(x.Input(radioArgs...)),
-		x.Child(x.Span(x.Class(checkmarkClasses+" checkmark"))),
+		x.Child(x.Span(x.AClass(checkmarkClasses+" checkmark"))),
 		x.Text(state.label),
 	)
 }
@@ -100,7 +100,7 @@ func RadioGroup(args ...interface{}) x.Component {
 		}
 	}
 
-	groupArgs := append([]x.DivArg{x.Class("space-y-2")}, state.baseArgs...)
+	groupArgs := append([]x.DivArg{x.AClass("space-y-2")}, state.baseArgs...)
 
 	return x.Div(groupArgs...)
 }

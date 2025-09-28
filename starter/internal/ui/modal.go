@@ -57,31 +57,30 @@ func Modal(args ...x.DivArg) x.Node {
 	modalClasses := "modal fixed inset-0 z-50 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center"
 
 	modalArgs := append([]x.DivArg{
-		x.Class(modalClasses),
-		x.Role("dialog"),
-		x.Aria("modal", "true"),
-		x.Aria("labelledby", "modal-title"),
+		x.AClass(modalClasses),
+		x.AAria("modal", "true"),
+		x.AAria("labelledby", "modal-title"),
 	}, args...)
 
 	// Add backdrop link for closing modal (click outside)
 	modalArgs = append(modalArgs, x.A(
-		x.Href("#"),
-		x.Class("absolute inset-0 z-[-1]"),
-		x.Aria("label", "Close dialog"),
+		x.AHref("#"),
+		x.AClass("absolute inset-0 z-[-1]"),
+		x.AAria("label", "Close dialog"),
 	))
 
 	// Add accessible close link that can be reached with keyboard navigation
 	modalArgs = append(modalArgs, x.A(
-		x.Href("#"),
-		x.Class("modal-esc-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:bg-background focus:border focus:px-2 focus:py-1 focus:rounded focus:text-sm focus:z-[1002]"),
+		x.AHref("#"),
+		x.AClass("modal-esc-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:bg-background focus:border focus:px-2 focus:py-1 focus:rounded focus:text-sm focus:z-[1002]"),
 		x.Text("Press Tab then Enter to close"),
-		x.Aria("label", "Close modal with keyboard"),
+		x.AAria("label", "Close modal with keyboard"),
 	))
 
 	return x.Div(modalArgs...).WithAssets(modalCSS, modalJS, "modal")
 }
 
-// ModalTrigger creates a trigger link for opening the modal. Pass x.AArg like x.Href("#id"), x.Text/x.T, classes, etc.
+// ModalTrigger creates a trigger link for opening the modal. Pass x.AArg like x.AHref("#id"), x.Text/x.T, classes, etc.
 func ModalTrigger(args ...x.AArg) x.Node {
 	return x.A(args...)
 }
@@ -92,13 +91,13 @@ func ModalContent(args ...x.DivArg) x.Node {
 	// Modal content styling - with entrance animation and focus management
 	contentClasses := "modal-content relative bg-background border shadow-lg p-6 w-full max-w-lg grid gap-4 rounded-lg transform scale-90 translate-y-[-20px] opacity-0 transition-all duration-200"
 
-	contentArgs := append([]x.DivArg{x.Class(contentClasses)}, args...)
+	contentArgs := append([]x.DivArg{x.AClass(contentClasses)}, args...)
 
 	// Add close button (×) in top-right
 	contentArgs = append(contentArgs, x.A(
-		x.Href("#"),
-		x.Class("absolute right-5 top-5 rounded-sm opacity-70 hover:opacity-100 transition-opacity text-2xl leading-none w-4 h-4 flex items-center justify-center"),
-		x.Aria("label", "Close modal"),
+		x.AHref("#"),
+		x.AClass("absolute right-5 top-5 rounded-sm opacity-70 hover:opacity-100 transition-opacity text-2xl leading-none w-4 h-4 flex items-center justify-center"),
+		x.AAria("label", "Close modal"),
 		x.Text("×"),
 	))
 
@@ -108,27 +107,27 @@ func ModalContent(args ...x.DivArg) x.Node {
 // ModalHeader creates a modal header with shadcn/ui styling
 func ModalHeader(args ...x.DivArg) x.Node {
 	headerClasses := "flex flex-col gap-2 text-center sm:text-left"
-	headerArgs := append([]x.DivArg{x.Class(headerClasses)}, args...)
+	headerArgs := append([]x.DivArg{x.AClass(headerClasses)}, args...)
 	return x.Div(headerArgs...)
 }
 
 // ModalTitle creates a modal title with shadcn/ui styling. Pass x.H2Arg (x.Text/x.T, x.Child, etc.)
 func ModalTitle(args ...x.H2Arg) x.Node {
 	titleClasses := "text-lg leading-none font-semibold"
-	titleArgs := append([]x.H2Arg{x.Class(titleClasses), x.Id("modal-title")}, args...)
+	titleArgs := append([]x.H2Arg{x.AClass(titleClasses), x.AId("modal-title")}, args...)
 	return x.H2(titleArgs...)
 }
 
 // ModalDescription creates a modal description with shadcn/ui styling
 func ModalDescription(args ...x.PArg) x.Node {
 	descClasses := "text-muted-foreground text-sm"
-	descArgs := append([]x.PArg{x.Class(descClasses)}, args...)
+	descArgs := append([]x.PArg{x.AClass(descClasses)}, args...)
 	return x.P(descArgs...)
 }
 
 // ModalFooter creates a modal footer with shadcn/ui styling
 func ModalFooter(args ...x.DivArg) x.Node {
 	footerClasses := "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end"
-	footerArgs := append([]x.DivArg{x.Class(footerClasses)}, args...)
+	footerArgs := append([]x.DivArg{x.AClass(footerClasses)}, args...)
 	return x.Div(footerArgs...)
 }

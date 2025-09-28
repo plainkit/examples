@@ -8,15 +8,15 @@ import (
 
 func main() {
 	page := Html(
-		Lang("en"),
+		ALang("en"),
 		Head(
-			HeadTitle(T("My Page")),
-			Meta(Charset("UTF-8")),
-			HeadStyle(T(".intro { color: blue; }")),
+			Title(T("My Page")),
+			Meta(ACharset("UTF-8")),
+			Style(T(".intro { color: blue; }")),
 		),
 		Body(
 			H1(T("Hello, World!")),
-			P(T("Built with Plain"), Class("intro")),
+			P(T("Built with Plain"), AClass("intro")),
 		),
 	)
 

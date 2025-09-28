@@ -13,6 +13,9 @@ import (
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
 	"github.com/markbates/goth/providers/google"
+
+	"github.com/plainkit/fonts/inter"
+	_ "github.com/plainkit/fonts/inter/basic"
 	. "github.com/plainkit/html"
 )
 
@@ -59,6 +62,7 @@ func main() {
 	mux.HandleFunc("/auth/google/callback", completeGoogleAuth)
 	mux.HandleFunc("/dashboard", requireAuth(renderDashboard))
 	mux.HandleFunc("/logout", handleLogout)
+	inter.RegisterStatic(mux, "/assets/fonts/")
 
 	addr := ":" + getenvDefault("PORT", defaultPort)
 	fmt.Println("🚀 Goth Google OAuth Demo Server starting on " + addr)
@@ -79,19 +83,10 @@ func renderHome(w http.ResponseWriter, r *http.Request) {
 
 	content := []Node{
 		H1(T("PlainKit + Goth")),
-		P(Class("muted"), T("Authenticate with Google to access the private dashboard.")),
+		P(AClass("muted"), T("Authenticate with Google to access the private dashboard.")),
 		Div(
-			Class("actions"),
-			A(Href("/auth/google"), Class("button"),
-				Svg(
-					Xmlns("http://www.w3.org/2000/svg"),
-					ViewBox("0 0 24 24"),
-					SvgWidth("20"),
-					SvgHeight("20"),
-					Fill("currentColor"),
-					Role("img"),
-					Path(D("M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z")),
-				),
+			AClass("actions"),
+			A(AHref("/auth/google"), AClass("button"),
 				T("Continue with Google"),
 			),
 		),
@@ -115,29 +110,29 @@ func renderDashboard(w http.ResponseWriter, r *http.Request) {
 	if user.AvatarURL != "" {
 		content = append(content,
 			Div(
-				Class("avatar"),
-				Img(Src(user.AvatarURL), Alt("Avatar")),
+				AClass("avatar"),
+				Img(ASrc(user.AvatarURL), AAlt("Avatar")),
 			),
 		)
 	}
 
 	content = append(content,
 		Div(
-			Class("surface"),
+			AClass("surface"),
 			Div(
-				Class("data-row"),
-				Span(Class("data-label"), T("Name")),
+				AClass("data-row"),
+				Span(AClass("data-label"), T("Name")),
 				Strong(T(user.Name)),
 			),
 			Div(
-				Class("data-row"),
-				Span(Class("data-label"), T("Email")),
+				AClass("data-row"),
+				Span(AClass("data-label"), T("Email")),
 				Strong(T(user.Email)),
 			),
 		),
 		Div(
-			Class("actions"),
-			A(Href("/logout"), Class("button"), T("Sign out")),
+			AClass("actions"),
+			A(AHref("/logout"), AClass("button"), T("Sign out")),
 		),
 	)
 
@@ -156,23 +151,24 @@ func renderPage(w http.ResponseWriter, title string, body ...Node) {
 // layout creates the base HTML structure for all pages.
 func layout(title string, body ...Node) Node {
 	cardChildren := make([]DivArg, 0, len(body)+1)
-	cardChildren = append(cardChildren, Class("card shell"))
+	cardChildren = append(cardChildren, AClass("card shell"))
 	for _, node := range body {
 		cardChildren = append(cardChildren, Child(node))
 	}
 
 	return Html(
-		Lang("en"),
+		ALang("en"),
 		Head(
-			HeadTitle(T(title)),
-			Meta(Charset("UTF-8")),
-			Meta(Name("viewport"), Content("width=device-width, initial-scale=1")),
-			HeadStyle(UnsafeText(baseStyles())),
+			Title(T(title)),
+			Meta(ACharset("UTF-8")),
+			Meta(AName("viewport"), AContent("width=device-width, initial-scale=1")),
+			inter.HeadComponents("/assets/fonts"),
+			Style(UnsafeText(baseStyles())),
 		),
 		Body(
-			Class("page"),
+			AClass("page"),
 			Main(
-				Class("container"),
+				AClass("container"),
 				Div(cardChildren...),
 			),
 		),
@@ -319,7 +315,7 @@ func baseStyles() string {
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   background: var(--bg);
   background-image: var(--bg-gradient);
   color: var(--fg);

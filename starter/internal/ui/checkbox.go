@@ -20,13 +20,13 @@ func Checkbox(args ...x.InputArg) x.Node {
 
 	// Build input args
 	inputArgs := append([]x.InputArg{
-		x.Class(inputCls),
-		x.InputType("checkbox"),
+		x.AClass(inputCls),
+		x.AType("checkbox"),
 	}, args...)
 
-	return x.FormLabel(
-		x.Class(container+states),
+	return x.Label(
+		x.AClass(container+states),
 		x.Input(inputArgs...),
-		x.Span(x.Class(indicator), lucide.Check(lucide.Size("14"))),
+		x.Span(x.AClass(indicator), lucide.Check(lucide.Size("14"))),
 	)
 }

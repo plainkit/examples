@@ -1,5 +1,5 @@
 module basic
 
-go 1.25.1
+go 1.18
 
-require github.com/plainkit/html v0.9.0
+require github.com/plainkit/html v0.18.0

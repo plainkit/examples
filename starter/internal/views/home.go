@@ -8,37 +8,37 @@ import (
 
 func HomePage() Node {
 	return Div(
-		Class("grid gap-8"),
+		AClass("grid gap-8"),
 
 		// Hero Section
 		Div(
-			Class("text-center py-12"),
+			AClass("text-center py-12"),
 			Div(
-				Class("flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-chart-4 rounded-xl mx-auto mb-6"),
-				icons.Diamond(icons.Size("32"), Class("text-primary-foreground")),
+				AClass("flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-chart-4 rounded-xl mx-auto mb-6"),
+				icons.Diamond(icons.Size("32"), AClass("text-primary-foreground")),
 			),
 			H1(
-				Class("text-4xl font-bold text-foreground mb-4"),
+				AClass("text-4xl font-bold text-foreground mb-4"),
 				T("Welcome to Plain"),
 			),
 			P(
-				Class("text-xl text-muted-foreground max-w-2xl mx-auto mb-8"),
+				AClass("text-xl text-muted-foreground max-w-2xl mx-auto mb-8"),
 				T("A modern, type-safe HTML component library for Go. This demo showcases beautiful interfaces built with compile-time guarantees."),
 			),
 			Div(
-				Class("flex items-center justify-center gap-4"),
+				AClass("flex items-center justify-center gap-4"),
 				A(
-					Href("/users"),
+					AHref("/users"),
 					ui.ButtonClass(),
-					Class("flex items-center gap-2"),
+					AClass("flex items-center gap-2"),
 					icons.Users(icons.Size("16")),
 					T("View Demo"),
 				),
 				A(
-					Href("https://github.com/plainkit/html"),
-					Target("_blank"),
+					AHref("https://github.com/plainkit/html"),
+					ATarget("_blank"),
 					ui.ButtonClass(ui.ButtonSecondary()),
-					Class("flex items-center gap-2"),
+					AClass("flex items-center gap-2"),
 					icons.Github(icons.Size("16")),
 					T("GitHub"),
 				),
@@ -47,66 +47,66 @@ func HomePage() Node {
 
 		// Stats Section
 		Div(
-			Class("text-center mb-8"),
-			H2(Class("text-2xl font-bold mb-6"), T("Key Features")),
+			AClass("text-center mb-8"),
+			H2(AClass("text-2xl font-bold mb-6"), T("Key Features")),
 		),
 		Div(
-			Class("grid grid-cols-1 md:grid-cols-4 gap-4"),
+			AClass("grid grid-cols-1 md:grid-cols-4 gap-4"),
 			ui.Card(
-				Class("p-6 text-center"),
+				AClass("p-6 text-center"),
 				Div(
-					Class("flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mx-auto mb-3"),
-					icons.Code(icons.Size("24"), Class("text-primary")),
+					AClass("flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mx-auto mb-3"),
+					icons.Code(icons.Size("24"), AClass("text-primary")),
 				),
-				H3(Class("text-2xl font-bold"), T("100%")),
-				P(Class("text-muted-foreground text-sm"), T("Type Safe")),
+				H3(AClass("text-2xl font-bold"), T("100%")),
+				P(AClass("text-muted-foreground text-sm"), T("Type Safe")),
 			),
 			ui.Card(
-				Class("p-6 text-center"),
+				AClass("p-6 text-center"),
 				Div(
-					Class("flex items-center justify-center w-12 h-12 bg-chart-1/10 rounded-lg mx-auto mb-3"),
-					icons.Zap(icons.Size("24"), Class("text-chart-1")),
+					AClass("flex items-center justify-center w-12 h-12 bg-chart-1/10 rounded-lg mx-auto mb-3"),
+					icons.Zap(icons.Size("24"), AClass("text-chart-1")),
 				),
-				H3(Class("text-2xl font-bold"), T("0ms")),
-				P(Class("text-muted-foreground text-sm"), T("Runtime Overhead")),
+				H3(AClass("text-2xl font-bold"), T("0ms")),
+				P(AClass("text-muted-foreground text-sm"), T("Runtime Overhead")),
 			),
 			ui.Card(
-				Class("p-6 text-center"),
+				AClass("p-6 text-center"),
 				Div(
-					Class("flex items-center justify-center w-12 h-12 bg-chart-3/10 rounded-lg mx-auto mb-3"),
-					icons.Blocks(icons.Size("24"), Class("text-chart-3")),
+					AClass("flex items-center justify-center w-12 h-12 bg-chart-3/10 rounded-lg mx-auto mb-3"),
+					icons.Blocks(icons.Size("24"), AClass("text-chart-3")),
 				),
-				H3(Class("text-2xl font-bold"), T("50+")),
-				P(Class("text-muted-foreground text-sm"), T("Components")),
+				H3(AClass("text-2xl font-bold"), T("50+")),
+				P(AClass("text-muted-foreground text-sm"), T("Components")),
 			),
 			ui.Card(
-				Class("p-6 text-center"),
+				AClass("p-6 text-center"),
 				Div(
-					Class("flex items-center justify-center w-12 h-12 bg-chart-5/10 rounded-lg mx-auto mb-3"),
-					icons.Heart(icons.Size("24"), Class("text-chart-5")),
+					AClass("flex items-center justify-center w-12 h-12 bg-chart-5/10 rounded-lg mx-auto mb-3"),
+					icons.Heart(icons.Size("24"), AClass("text-chart-5")),
 				),
-				H3(Class("text-2xl font-bold"), T("1000+")),
-				P(Class("text-muted-foreground text-sm"), T("Beautiful Icons")),
+				H3(AClass("text-2xl font-bold"), T("1000+")),
+				P(AClass("text-muted-foreground text-sm"), T("Beautiful Icons")),
 			),
 		),
 
 		// Features Grid
 		Div(
-			Class("text-center mb-8"),
-			H2(Class("text-2xl font-bold mb-6"), T("Why Choose Plain")),
+			AClass("text-center mb-8"),
+			H2(AClass("text-2xl font-bold mb-6"), T("Why Choose Plain")),
 		),
 		Div(
-			Class("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"),
+			AClass("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"),
 
 			// Feature 1: Type Safety
 			ui.Card(
-				Class("hover:shadow-lg transition-shadow"),
+				AClass("hover:shadow-lg transition-shadow"),
 				ui.CardHeader(
 					Div(
-						Class("flex items-center gap-4"),
+						AClass("flex items-center gap-4"),
 						Div(
-							Class("flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg"),
-							icons.Shield(icons.Size("24"), Class("text-primary")),
+							AClass("flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg"),
+							icons.Shield(icons.Size("24"), AClass("text-primary")),
 						),
 						ui.CardTitle(T("Type Safe")),
 					),
@@ -120,13 +120,13 @@ func HomePage() Node {
 
 			// Feature 2: Performance
 			ui.Card(
-				Class("hover:shadow-lg transition-shadow"),
+				AClass("hover:shadow-lg transition-shadow"),
 				ui.CardHeader(
 					Div(
-						Class("flex items-center gap-4"),
+						AClass("flex items-center gap-4"),
 						Div(
-							Class("flex items-center justify-center w-12 h-12 bg-chart-2/10 rounded-lg"),
-							icons.Zap(icons.Size("24"), Class("text-chart-2")),
+							AClass("flex items-center justify-center w-12 h-12 bg-chart-2/10 rounded-lg"),
+							icons.Zap(icons.Size("24"), AClass("text-chart-2")),
 						),
 						ui.CardTitle(T("Lightning Fast")),
 					),
@@ -140,13 +140,13 @@ func HomePage() Node {
 
 			// Feature 3: Beautiful Design
 			ui.Card(
-				Class("hover:shadow-lg transition-shadow"),
+				AClass("hover:shadow-lg transition-shadow"),
 				ui.CardHeader(
 					Div(
-						Class("flex items-center gap-4"),
+						AClass("flex items-center gap-4"),
 						Div(
-							Class("flex items-center justify-center w-12 h-12 bg-chart-4/10 rounded-lg"),
-							icons.Palette(icons.Size("24"), Class("text-chart-4")),
+							AClass("flex items-center justify-center w-12 h-12 bg-chart-4/10 rounded-lg"),
+							icons.Palette(icons.Size("24"), AClass("text-chart-4")),
 						),
 						ui.CardTitle(T("Beautiful Design")),
 					),
@@ -161,11 +161,11 @@ func HomePage() Node {
 
 		// Code Example
 		ui.Card(
-			Class("bg-gradient-to-br from-muted/50 to-accent/50"),
+			AClass("bg-gradient-to-br from-muted/50 to-accent/50"),
 			ui.CardHeader(
 				ui.CardTitle(
 					Div(
-						Class("flex items-center gap-2"),
+						AClass("flex items-center gap-2"),
 						icons.Code(icons.Size("24")),
 						T("Clean, Readable Code"),
 					),
@@ -174,7 +174,7 @@ func HomePage() Node {
 			),
 			ui.CardContent(
 				Pre(
-					Class("bg-muted p-4 rounded-lg border text-sm overflow-auto font-mono"),
+					AClass("bg-muted p-4 rounded-lg border text-sm overflow-auto font-mono"),
 					T(`import (
 	. "github.com/plainkit/html"
 	icons "github.com/plainkit/icons/lucide"
@@ -186,7 +186,7 @@ func HomePage() Node {
         ui.CardHeader(
             ui.CardTitle(
                 Div(
-                    Class("flex items-center gap-2"),
+                    AClass("flex items-center gap-2"),
                     icons.Zap(icons.Size("20")),
                     T("Plain Demo"),
                 ),

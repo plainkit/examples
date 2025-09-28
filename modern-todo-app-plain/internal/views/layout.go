@@ -94,51 +94,49 @@ func Layout(title string, content Node) Component {
 	assets.Collect(content)
 
 	return Html(
-		Lang("en"),
+		ALang("en"),
 		Head(
-			Meta(Charset("utf-8")),
-			Meta(Name("viewport"), Content("width=device-width, initial-scale=1")),
-			Meta(Name("description"), Content("Modern Todo App built with Plain.")),
-			HeadTitle(T(title)),
-			Link(LinkRel("preload"), LinkHref("/assets/styles.css"), LinkType("text/css")),
-			Link(LinkRel("stylesheet"), LinkHref("/assets/styles.css")),
-			assets.CSS(),
+			Meta(ACharset("utf-8")),
+			Meta(AName("viewport"), AContent("width=device-width, initial-scale=1")),
+			Meta(AName("description"), AContent("Modern Todo App built with Plain.")),
+			Title(T(title)),
+			Link(ARel("preload"), AHref("/assets/styles.css"), AType("text/css")),
+			Link(ARel("stylesheet"), AHref("/assets/styles.css")),
 		),
 		Body(
-			Class("bg-background text-foreground min-h-screen"),
+			AClass("bg-background text-foreground min-h-screen"),
 			Div(
-				Class("min-h-screen bg-background"),
+				AClass("min-h-screen bg-background"),
 				content,
 			),
-			Script(ScriptSrc("https://unpkg.com/htmx.org@1.9.12"), Defer()),
+			Script(ASrc("https://unpkg.com/htmx.org@1.9.12"), ADefer()),
 			Script(UnsafeText(dialogController)),
-			assets.JS(),
 		),
 	)
 }
 
 func AppHeader() Node {
 	return Header(
-		Class("border-b border-border bg-card/80 backdrop-blur sticky top-0 z-10"),
+		AClass("border-b border-border bg-card/80 backdrop-blur sticky top-0 z-10"),
 		Div(
-			Class("px-6 py-4 flex items-center justify-between"),
+			AClass("px-6 py-4 flex items-center justify-between"),
 			Div(
-				Class("flex items-center gap-3"),
+				AClass("flex items-center gap-3"),
 				Div(
-					Class("flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10"),
-					icons.ListChecks(icons.Size("22"), Class("text-primary")),
+					AClass("flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10"),
+					icons.ListChecks(icons.Size("22"), AClass("text-primary")),
 				),
 				Div(
-					H1(Class("text-2xl font-semibold tracking-tight"), T("Tasks")),
-					P(Class("text-sm text-muted-foreground"), T("Organize your day, achieve your goals")),
+					H1(AClass("text-2xl font-semibold tracking-tight"), T("Tasks")),
+					P(AClass("text-sm text-muted-foreground"), T("Organize your day, achieve your goals")),
 				),
 			),
 			Button(
-				Id("open-add-dialog"),
-				Class("inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition hover:bg-primary/90"),
-				Data("dialog-target", "add-dialog"),
-				Span(Class("inline-flex h-5 w-5 items-center justify-center"),
-					icons.Plus(icons.Size("16"), Class("text-primary-foreground")),
+				AId("open-add-dialog"),
+				AClass("inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition hover:bg-primary/90"),
+				AData("dialog-target", "add-dialog"),
+				Span(AClass("inline-flex h-5 w-5 items-center justify-center"),
+					icons.Plus(icons.Size("16"), AClass("text-primary-foreground")),
 				),
 				T("Add Task"),
 			),
