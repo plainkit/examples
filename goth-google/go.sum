@@ -1,5 +1,7 @@
 cloud.google.com/go/compute/metadata v0.9.0 h1:pDUj4QMoPejqq20dK0Pg2N4yG9zIkYGdBtwLoEkH9Zs=
 cloud.google.com/go/compute/metadata v0.9.0/go.mod h1:E0bWwX5wTnLPedCKqk3pJmVgCBSM6qQI1yTBdEb3C10=
+github.com/Oudwins/tailwind-merge-go v0.2.1 h1:jxRaEqGtwwwF48UuFIQ8g8XT7YSualNuGzCvQ89nPFE=
+github.com/Oudwins/tailwind-merge-go v0.2.1/go.mod h1:kkZodgOPvZQ8f7SIrlWkG/w1g9JTbtnptnePIh3V72U=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/go-chi/chi/v5 v5.2.3 h1:WQIt9uxdsAbgIYgid+BpYc+liqQZGMHRaUwp0JUcvdE=
@@ -16,14 +18,12 @@ github.com/gorilla/sessions v1.4.0 h1:kpIYOp/oi6MG/p5PgxApU8srsSw9tuFbt46Lt7auzq
 github.com/gorilla/sessions v1.4.0/go.mod h1:FLWm50oby91+hl7p/wRxDth9bWSuk0qVL2emc7lT5ik=
 github.com/markbates/goth v1.82.0 h1:8j/c34AjBSTNzO7zTsOyP5IYCQCMBTRBHAbBt/PI0bQ=
 github.com/markbates/goth v1.82.0/go.mod h1:/DRlcq0pyqkKToyZjsL2KgiA1zbF1HIjE7u2uC79rUk=
-github.com/plainkit/fonts v0.2.0 h1:zyOBxpuJng7AgtIgfZqR3RjpK8jW8eqGfLTsAJd40D0=
-github.com/plainkit/fonts v0.2.0/go.mod h1:e1ad4b020DKdWxMyUn1cmIXWswSDakuMnBwBinMj9YI=
 github.com/plainkit/fonts v0.3.0 h1:yApzUEIfbQ/sRZkY26TYuVrl52FMxho69NcB3YRXfTY=
 github.com/plainkit/fonts v0.3.0/go.mod h1:/sRyH6iF3JNFy2rgQs3tAO3InCZxBexYaa4SNcuBl8k=
-github.com/plainkit/html v0.16.0 h1:jGxCuE7n5mLXzpSEH79zc9s+4R6zVPnfYsgYOg3vTVg=
-github.com/plainkit/html v0.16.0/go.mod h1:S/JgjPo2gBecfPy3J3i/EM+9lJehBsV4Z94nTUc3+8s=
-github.com/plainkit/html v0.18.0 h1:/YvCxVT4NgDUDd741pJviYsyUw/LgWcVncaj+JkBrlQ=
-github.com/plainkit/html v0.18.0/go.mod h1:G8xDVL5UAKqdrdB8HHwloRwl+w8UMqzsZ7GzC8/qAXE=
+github.com/plainkit/html v0.19.0 h1:yaPyFRZnrvs0nrS3U0FPkd114zqSnwytc/pmTGmoLMM=
+github.com/plainkit/html v0.19.0/go.mod h1:G8xDVL5UAKqdrdB8HHwloRwl+w8UMqzsZ7GzC8/qAXE=
+github.com/plainkit/html v0.20.0 h1:KlULRryfC9bV1mgAW97+mmYpM+keFCWzP6bcdYJ35p4=
+github.com/plainkit/html v0.20.0/go.mod h1:DNSes45N6gz60p5jOubdsVZAwFeCl/KibO0S9fznmJg=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=

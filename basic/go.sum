@@ -1,4 +1,10 @@
+github.com/Oudwins/tailwind-merge-go v0.2.1 h1:jxRaEqGtwwwF48UuFIQ8g8XT7YSualNuGzCvQ89nPFE=
+github.com/Oudwins/tailwind-merge-go v0.2.1/go.mod h1:kkZodgOPvZQ8f7SIrlWkG/w1g9JTbtnptnePIh3V72U=
 github.com/plainkit/html v0.16.0 h1:jGxCuE7n5mLXzpSEH79zc9s+4R6zVPnfYsgYOg3vTVg=
 github.com/plainkit/html v0.16.0/go.mod h1:S/JgjPo2gBecfPy3J3i/EM+9lJehBsV4Z94nTUc3+8s=
 github.com/plainkit/html v0.18.0 h1:/YvCxVT4NgDUDd741pJviYsyUw/LgWcVncaj+JkBrlQ=
 github.com/plainkit/html v0.18.0/go.mod h1:G8xDVL5UAKqdrdB8HHwloRwl+w8UMqzsZ7GzC8/qAXE=
+github.com/plainkit/html v0.19.0 h1:yaPyFRZnrvs0nrS3U0FPkd114zqSnwytc/pmTGmoLMM=
+github.com/plainkit/html v0.19.0/go.mod h1:G8xDVL5UAKqdrdB8HHwloRwl+w8UMqzsZ7GzC8/qAXE=
+github.com/plainkit/html v0.20.0 h1:KlULRryfC9bV1mgAW97+mmYpM+keFCWzP6bcdYJ35p4=
+github.com/plainkit/html v0.20.0/go.mod h1:DNSes45N6gz60p5jOubdsVZAwFeCl/KibO0S9fznmJg=

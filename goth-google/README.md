@@ -1,17 +1,21 @@
 # PlainKit + Goth Google Login Example
 
 A minimal PlainKit HTML web app that uses [goth](https://github.com/markbates/goth) for Google authentication. It demonstrates:
+
 - Composing UI with `github.com/plainkit/html`
 - Starting the OAuth flow with Goth + Google
 - Persisting the logged-in user in a session cookie
 - Protecting a private route that requires authentication
 
 ## Prerequisites
+
 - Go 1.21+
 - A Google Cloud project with OAuth credentials (web application)
 
 ## Configuration
+
 Collect the following values from the Google Cloud console:
+
 - **Client ID** (`GOOGLE_CLIENT_ID`)
 - **Client secret** (`GOOGLE_CLIENT_SECRET`)
 - Authorized redirect URI set to `http://localhost:3000/auth/google/callback`

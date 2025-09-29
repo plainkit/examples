@@ -3,10 +3,11 @@ module goth-google
 go 1.25.1
 
 require (
+	github.com/Oudwins/tailwind-merge-go v0.2.1
 	github.com/gorilla/sessions v1.4.0
 	github.com/markbates/goth v1.82.0
 	github.com/plainkit/fonts v0.3.0
-	github.com/plainkit/html v0.18.0
+	github.com/plainkit/html v0.20.0
 )
 
 require (

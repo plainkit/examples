@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/gob"
 	"fmt"
+	"goth-google/css"
 	"log"
 	"net/http"
 	"os"
@@ -17,6 +18,12 @@ import (
 	"github.com/plainkit/fonts/inter"
 	_ "github.com/plainkit/fonts/inter/basic"
 	. "github.com/plainkit/html"
+
+	"goth-google/icons"
+	"goth-google/ui/avatar"
+	"goth-google/ui/button"
+	"goth-google/ui/card"
+	"goth-google/ui/separator"
 )
 
 // sessionUser represents a user stored in the session.
@@ -62,6 +69,7 @@ func main() {
 	mux.HandleFunc("/auth/google/callback", completeGoogleAuth)
 	mux.HandleFunc("/dashboard", requireAuth(renderDashboard))
 	mux.HandleFunc("/logout", handleLogout)
+	mux.HandleFunc("/assets/styles.css", cssHandler)
 	inter.RegisterStatic(mux, "/assets/fonts/")
 
 	addr := ":" + getenvDefault("PORT", defaultPort)
@@ -81,18 +89,21 @@ func renderHome(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	content := []Node{
-		H1(T("PlainKit + Goth")),
-		P(AClass("muted"), T("Authenticate with Google to access the private dashboard.")),
-		Div(
-			AClass("actions"),
-			A(AHref("/auth/google"), AClass("button"),
+	content := card.Card(
+		card.Header(
+			card.Title(T("Welcome to PlainKit + Goth")),
+			card.Description(T("Authenticate with Google to access your personalized dashboard.")),
+		),
+		card.Content(
+			button.Button(
+				button.Props{Variant: button.VariantDefault, Size: button.SizeLg, FullWidth: true, Href: "/auth/google"},
+				icons.Google(AClass("w-5 h-5")),
 				T("Continue with Google"),
 			),
 		),
-	}
+	)
 
-	renderPage(w, "Home", content...)
+	renderPage(w, "Home", content)
 }
 
 // renderDashboard displays the user dashboard with profile information.
@@ -103,73 +114,90 @@ func renderDashboard(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	content := []Node{
-		H1(T("Welcome back")),
-	}
-
+	var avatarContent Node
 	if user.AvatarURL != "" {
-		content = append(content,
+		avatarContent = card.Content(
 			Div(
-				AClass("avatar"),
-				Img(ASrc(user.AvatarURL), AAlt("Avatar")),
+				AClass("flex justify-center mb-6"),
+				avatar.Avatar(
+					avatar.Props{Size: avatar.SizeLg},
+					avatar.Image(avatar.ImageProps{Src: user.AvatarURL, Alt: "Profile picture"}),
+					avatar.Fallback(T(string([]rune(user.Name)[0:1]))),
+				),
 			),
 		)
 	}
 
-	content = append(content,
-		Div(
-			AClass("surface"),
-			Div(
-				AClass("data-row"),
-				Span(AClass("data-label"), T("Name")),
-				Strong(T(user.Name)),
-			),
-			Div(
-				AClass("data-row"),
-				Span(AClass("data-label"), T("Email")),
-				Strong(T(user.Email)),
-			),
+	content := card.Card(
+		card.Header(
+			card.Title(T("Welcome back, "+user.Name)),
+			card.Description(T("Here's your profile information from Google.")),
 		),
-		Div(
-			AClass("actions"),
-			A(AHref("/logout"), AClass("button"), T("Sign out")),
-		),
+		avatarContent,
+		card.Content(
+			Div(
+				AClass("space-y-4"),
+				Div(
+					AClass("flex justify-between items-center py-2"),
+					Span(AClass("text-sm font-medium text-muted-foreground"), T("Full Name")),
+					Span(AClass("text-sm font-semibold"), T(user.Name)),
+				),
+				separator.Separator(),
+				Div(
+					AClass("flex justify-between items-center py-2"),
+					Span(AClass("text-sm font-medium text-muted-foreground"), T("Email Address"),
+						Span(AClass("text-sm font-semibold"), T(user.Email)),
+					),
+				),
+			),
+			card.Footer(
+				button.Button(
+					button.Props{Variant: button.VariantOutline, Size: button.SizeDefault, FullWidth: true, Href: "/logout"},
+					T("Sign Out"),
+				),
+			)),
 	)
 
-	renderPage(w, "Dashboard", content...)
+	renderPage(w, "Dashboard", content)
 }
 
 // renderPage renders a complete HTML page with the given title and body content.
-func renderPage(w http.ResponseWriter, title string, body ...Node) {
-	page := layout(title, body...)
+func renderPage(w http.ResponseWriter, title string, body Node) {
+	page := layout(title, body)
+
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
 	if _, err := w.Write([]byte("<!DOCTYPE html>\n" + Render(page))); err != nil {
 		log.Printf("render error: %v", err)
 	}
 }
 
-// layout creates the base HTML structure for all pages.
-func layout(title string, body ...Node) Node {
-	cardChildren := make([]DivArg, 0, len(body)+1)
-	cardChildren = append(cardChildren, AClass("card shell"))
-	for _, node := range body {
-		cardChildren = append(cardChildren, Child(node))
-	}
+// cssHandler serves the CSS styles for the application.
+func cssHandler(w http.ResponseWriter, _ *http.Request) {
+	w.Header().Set("Content-Type", "text/css; charset=utf-8")
+	w.Header().Set("Cache-Control", "public, max-age=31536000")
 
+	if _, err := w.Write([]byte(css.TailwindCSS)); err != nil {
+		log.Printf("write css: %v", err)
+	}
+}
+
+// layout creates the base HTML structure for all pages.
+func layout(title string, body Node) Node {
 	return Html(
 		ALang("en"),
 		Head(
 			Title(T(title)),
 			Meta(ACharset("UTF-8")),
 			Meta(AName("viewport"), AContent("width=device-width, initial-scale=1")),
+			Link(ARel("stylesheet"), AHref("/assets/styles.css")),
 			inter.HeadComponents("/assets/fonts"),
-			Style(UnsafeText(baseStyles())),
 		),
 		Body(
-			AClass("page"),
-			Main(
-				AClass("container"),
-				Div(cardChildren...),
+			AClass("min-h-screen bg-background flex items-center justify-center p-4"),
+			Div(
+				AClass("w-full max-w-md"),
+				body,
 			),
 		),
 	)
@@ -230,6 +258,7 @@ func requireAuth(next http.HandlerFunc) http.HandlerFunc {
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		}
+
 		next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), userContextKey{}, user)))
 	}
 }
@@ -240,13 +269,16 @@ func currentUser(r *http.Request) *sessionUser {
 	if err != nil {
 		return nil
 	}
+
 	if value, ok := session.Values["user"]; ok {
 		switch v := value.(type) {
 		case sessionUser:
 			if v.Email == "" {
 				return nil
 			}
+
 			user := v
+
 			return &user
 		case *sessionUser:
 			if v != nil && v.Email != "" {
@@ -254,6 +286,7 @@ func currentUser(r *http.Request) *sessionUser {
 			}
 		}
 	}
+
 	return nil
 }
 
@@ -268,166 +301,8 @@ func userFromContext(r *http.Request) *sessionUser {
 			return &user
 		}
 	}
-	return nil
-}
 
-// baseStyles returns the CSS styles for the application.
-func baseStyles() string {
-	return `:root {
-  color-scheme: light dark;
-  --bg: #fafafa; /* zinc-50 */
-  --bg-gradient: radial-gradient(circle at top left, rgba(113, 113, 122, 0.08), rgba(161, 161, 170, 0.05));
-  --fg: #18181b; /* zinc-900 */
-  --muted: #71717a; /* zinc-500 */
-  --card-bg: #ffffff; /* white */
-  --surface-bg: #fafafa; /* zinc-50 */
-  --border: rgba(161, 161, 170, 0.2); /* zinc-400 with opacity */
-  --shadow: 0 28px 80px rgba(24, 24, 27, 0.12); /* zinc-900 shadow */
-  --surface-shadow: 0 20px 50px rgba(24, 24, 27, 0.06);
-  --accent: #3f3f46; /* zinc-700 */
-  --accent-hover: #27272a; /* zinc-800 */
-  --button-bg: rgba(63, 63, 70, 0.08); /* zinc-700 with opacity */
-  --button-border: rgba(113, 113, 122, 0.25); /* zinc-500 with opacity */
-  --button-hover-bg: rgba(63, 63, 70, 0.15); /* zinc-700 with opacity */
-  --avatar-border: rgba(113, 113, 122, 0.4); /* zinc-500 with opacity */
-  --avatar-shadow: 0 10px 30px rgba(24, 24, 27, 0.18); /* zinc-900 shadow */
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #09090b; /* zinc-950 */
-    --bg-gradient: radial-gradient(circle at top left, rgba(113, 113, 122, 0.15), rgba(82, 82, 91, 0.08));
-    --fg: #fafafa; /* zinc-50 */
-    --muted: #a1a1aa; /* zinc-400 */
-    --card-bg: #18181b; /* zinc-900 */
-    --surface-bg: #27272a; /* zinc-800 */
-    --border: rgba(82, 82, 91, 0.3); /* zinc-600 with opacity */
-    --shadow: 0 30px 90px rgba(9, 9, 11, 0.8); /* zinc-950 shadow */
-    --surface-shadow: 0 22px 60px rgba(9, 9, 11, 0.5);
-    --accent: #d4d4d8; /* zinc-300 */
-    --accent-hover: #e4e4e7; /* zinc-200 */
-    --button-bg: rgba(212, 212, 216, 0.1); /* zinc-300 with opacity */
-    --button-border: rgba(161, 161, 170, 0.25); /* zinc-400 with opacity */
-    --button-hover-bg: rgba(212, 212, 216, 0.2); /* zinc-300 with opacity */
-    --avatar-border: rgba(161, 161, 170, 0.4); /* zinc-400 with opacity */
-    --avatar-shadow: 0 10px 30px rgba(9, 9, 11, 0.25); /* zinc-950 shadow */
-  }
-}
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  background: var(--bg);
-  background-image: var(--bg-gradient);
-  color: var(--fg);
-}
-.page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 32px;
-}
-.container {
-  width: min(520px, 100%);
-}
-.card {
-  background: var(--card-bg);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-}
-.shell {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  padding: 48px;
-}
-.surface {
-  background: var(--surface-bg);
-  border-radius: 8px;
-  padding: 24px;
-  border: 1px solid var(--border);
-  box-shadow: var(--surface-shadow);
-}
-h1 {
-  margin: 0;
-  font-size: 2.3rem;
-  line-height: 1.1;
-}
-p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.7;
-}
-.muted {
-  color: var(--muted);
-}
-.surface > * + * {
-  margin-top: 18px;
-}
-.data-row {
-  display: flex;
-  gap: 12px;
-  align-items: baseline;
-  font-weight: 500;
-}
-.data-label {
-  min-width: 72px;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.data-row strong {
-  color: var(--fg);
-  font-weight: 600;
-}
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 20px;
-  border-radius: 8px;
-  border: 1px solid var(--button-border);
-  background: var(--button-bg);
-  color: var(--accent);
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.2s ease, transform 0.2s ease, border 0.2s ease;
-}
-.button:hover {
-  background: var(--button-hover-bg);
-  transform: translateY(-1px);
-}
-.button:active {
-  transform: translateY(1px);
-}
-.avatar {
-  display: flex;
-  justify-content: center;
-}
-.avatar img {
-  border-radius: 50%;
-  width: 88px;
-  height: 88px;
-  border: 3px solid var(--avatar-border);
-  box-shadow: var(--avatar-shadow);
-}
-@media (max-width: 640px) {
-  .shell {
-    padding: 32px;
-  }
-  .actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-}
-`
+	return nil
 }
 
 // withProvider adds the provider name to the request context for goth.
@@ -441,6 +316,7 @@ func mustEnv(key string) string {
 	if value == "" {
 		log.Fatalf("missing required environment variable %s", key)
 	}
+
 	return value
 }
 
@@ -450,5 +326,6 @@ func getenvDefault(key, fallback string) string {
 	if value == "" {
 		return fallback
 	}
+
 	return value
 }
