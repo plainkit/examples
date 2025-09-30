@@ -1,4 +1,4 @@
-module google-auth
+module github.com/plainkit/examples/google-auth
 
 go 1.25.1
 
