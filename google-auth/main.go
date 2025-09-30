@@ -5,7 +5,7 @@ import (
 	"context"
 	"encoding/gob"
 	"fmt"
-	"goth-google/css"
+	"google-auth/css"
 	"log"
 	"net/http"
 	"os"
@@ -19,11 +19,11 @@ import (
 	_ "github.com/plainkit/fonts/inter/basic"
 	. "github.com/plainkit/html"
 
-	"goth-google/icons"
-	"goth-google/ui/avatar"
-	"goth-google/ui/button"
-	"goth-google/ui/card"
-	"goth-google/ui/separator"
+	"google-auth/icons"
+	"google-auth/ui/avatar"
+	"google-auth/ui/button"
+	"google-auth/ui/card"
+	"google-auth/ui/separator"
 )
 
 // sessionUser represents a user stored in the session.
