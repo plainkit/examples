@@ -20,8 +20,8 @@ github.com/markbates/goth v1.82.0 h1:8j/c34AjBSTNzO7zTsOyP5IYCQCMBTRBHAbBt/PI0bQ
 github.com/markbates/goth v1.82.0/go.mod h1:/DRlcq0pyqkKToyZjsL2KgiA1zbF1HIjE7u2uC79rUk=
 github.com/plainkit/fonts v0.3.0 h1:yApzUEIfbQ/sRZkY26TYuVrl52FMxho69NcB3YRXfTY=
 github.com/plainkit/fonts v0.3.0/go.mod h1:/sRyH6iF3JNFy2rgQs3tAO3InCZxBexYaa4SNcuBl8k=
-github.com/plainkit/html v0.20.0 h1:KlULRryfC9bV1mgAW97+mmYpM+keFCWzP6bcdYJ35p4=
-github.com/plainkit/html v0.20.0/go.mod h1:DNSes45N6gz60p5jOubdsVZAwFeCl/KibO0S9fznmJg=
+github.com/plainkit/html v0.21.0 h1:TzgRiuX+PqAEt6RmaT8aZy7Zql487iWLWKvuk5tKbnM=
+github.com/plainkit/html v0.21.0/go.mod h1:DNSes45N6gz60p5jOubdsVZAwFeCl/KibO0S9fznmJg=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=

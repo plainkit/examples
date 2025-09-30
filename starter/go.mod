@@ -3,7 +3,7 @@ module starter
 go 1.25
 
 require (
-	github.com/plainkit/html v0.20.0
+	github.com/plainkit/html v0.21.0
 	github.com/stretchr/testify v1.9.0
 )
 
