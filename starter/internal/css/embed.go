@@ -1,10 +1,8 @@
-// Package css embeds the compiled Tailwind CSS stylesheet.
 package css
 
 import _ "embed"
 
-// TailwindCSS contains the compiled Tailwind stylesheet.
-// The file is embedded at compile time using go:embed.
+// TailwindCSS contains the compiled stylesheet for the starter app.
 //
 //go:embed output.css
 var TailwindCSS string

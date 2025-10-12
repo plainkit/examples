@@ -1,10 +1,11 @@
-module starter
+module github.com/plainkit/bloxui/examples/starter
 
-go 1.25
+go 1.22
 
 require (
+	github.com/google/uuid v1.6.0
 	github.com/plainkit/html v0.21.0
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.11.1
 )
 
 require (

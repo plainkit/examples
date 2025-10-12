@@ -18,8 +18,8 @@ github.com/gorilla/sessions v1.4.0 h1:kpIYOp/oi6MG/p5PgxApU8srsSw9tuFbt46Lt7auzq
 github.com/gorilla/sessions v1.4.0/go.mod h1:FLWm50oby91+hl7p/wRxDth9bWSuk0qVL2emc7lT5ik=
 github.com/markbates/goth v1.82.0 h1:8j/c34AjBSTNzO7zTsOyP5IYCQCMBTRBHAbBt/PI0bQ=
 github.com/markbates/goth v1.82.0/go.mod h1:/DRlcq0pyqkKToyZjsL2KgiA1zbF1HIjE7u2uC79rUk=
-github.com/plainkit/fonts v0.3.0 h1:yApzUEIfbQ/sRZkY26TYuVrl52FMxho69NcB3YRXfTY=
-github.com/plainkit/fonts v0.3.0/go.mod h1:/sRyH6iF3JNFy2rgQs3tAO3InCZxBexYaa4SNcuBl8k=
+github.com/plainkit/fonts v0.4.0 h1:CvuWiloAnvGBpVN25ial6fxW4DUwtf4fEOOGOIgdbzY=
+github.com/plainkit/fonts v0.4.0/go.mod h1:RF78nr0NtSqCF44Of4l13oUdK+GszGfEuAkHucUhRZI=
 github.com/plainkit/html v0.21.0 h1:TzgRiuX+PqAEt6RmaT8aZy7Zql487iWLWKvuk5tKbnM=
 github.com/plainkit/html v0.21.0/go.mod h1:DNSes45N6gz60p5jOubdsVZAwFeCl/KibO0S9fznmJg=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

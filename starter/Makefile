@@ -1,28 +1,22 @@
-.PHONY: help dev build test clean css css-watch
+.PHONY: help css css-watch dev build test clean
 
-help: ## Show this help
+help: ## Show available commands
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
-css: ## Build Tailwind CSS (minified)
-	@echo "Building CSS..."
+css: ## Compile Tailwind CSS once
 	tailwindcss -i ./internal/css/index.css -o ./internal/css/output.css --minify
 
-css-watch: ## Watch and rebuild CSS on changes
+css-watch: ## Rebuild CSS on file changes
 	tailwindcss -i ./internal/css/index.css -o ./internal/css/output.css --watch
 
-dev: css ## Build CSS and run development server
-	@echo "Starting server..."
-	go run cmd/server/main.go
+dev: css ## Build CSS and run the development server
+	go run ./cmd/server
 
-build: css ## Build CSS and compile binary
-	@echo "Building application..."
-	go build -o bin/server cmd/server/main.go
+build: css ## Build the starter binary
+	go build -o ./bin/starter ./cmd/server
 
-test: ## Run all tests
-	go test -v -race -cover ./...
+test: ## Run unit and integration tests
+	go test ./...
 
-test-integration: ## Run integration tests only
-	go test -v -race ./internal/app/...
-
-clean: ## Clean build artifacts
-	rm -rf bin/ internal/css/output.css
+clean: ## Remove build artifacts
+	rm -rf ./bin ./internal/css/output.css

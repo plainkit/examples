@@ -1,22 +1,14 @@
-// Package store provides data persistence implementations.
-// This package defines interfaces and implementations for data access.
 package store
 
 import (
 	"context"
 	"errors"
+	"sort"
 	"sync"
-	"time"
 
-	"starter/internal/domain"
+	"github.com/plainkit/bloxui/examples/starter/internal/domain"
 )
 
-var (
-	// ErrNotFound is returned when a todo is not found.
-	ErrNotFound = errors.New("todo not found")
-)
-
-// TodoStore defines the interface for todo data operations.
 type TodoStore interface {
 	Create(ctx context.Context, todo *domain.Todo) error
 	Get(ctx context.Context, id string) (*domain.Todo, error)
@@ -25,79 +17,75 @@ type TodoStore interface {
 	Delete(ctx context.Context, id string) error
 }
 
-// MemoryStore is an in-memory implementation of TodoStore.
-// Useful for demos, testing, and development.
+var ErrNotFound = errors.New("todo not found")
+
 type MemoryStore struct {
 	mu    sync.RWMutex
 	todos map[string]*domain.Todo
 }
 
-// NewMemoryStore creates a new in-memory todo store.
 func NewMemoryStore() *MemoryStore {
-	return &MemoryStore{
-		todos: make(map[string]*domain.Todo),
-	}
+	return &MemoryStore{todos: make(map[string]*domain.Todo)}
 }
 
-// Create adds a new todo to the store.
-func (s *MemoryStore) Create(ctx context.Context, todo *domain.Todo) error {
+func (s *MemoryStore) Create(_ context.Context, todo *domain.Todo) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	todo.CreatedAt = time.Now()
-	todo.UpdatedAt = time.Now()
 	s.todos[todo.ID] = todo
 
 	return nil
 }
 
-// Get retrieves a todo by ID.
-func (s *MemoryStore) Get(ctx context.Context, id string) (*domain.Todo, error) {
+func (s *MemoryStore) Get(_ context.Context, id string) (*domain.Todo, error) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
-	todo, exists := s.todos[id]
-	if !exists {
+	todo, ok := s.todos[id]
+	if !ok {
 		return nil, ErrNotFound
 	}
 
-	return todo, nil
+	clone := *todo
+
+	return &clone, nil
 }
 
-// List returns all todos.
-func (s *MemoryStore) List(ctx context.Context) ([]*domain.Todo, error) {
+func (s *MemoryStore) List(_ context.Context) ([]*domain.Todo, error) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
 	todos := make([]*domain.Todo, 0, len(s.todos))
 	for _, todo := range s.todos {
-		todos = append(todos, todo)
+		clone := *todo
+		todos = append(todos, &clone)
 	}
+
+	sort.Slice(todos, func(i, j int) bool {
+		return todos[i].CreatedAt.After(todos[j].CreatedAt)
+	})
 
 	return todos, nil
 }
 
-// Update modifies an existing todo.
-func (s *MemoryStore) Update(ctx context.Context, todo *domain.Todo) error {
+func (s *MemoryStore) Update(_ context.Context, todo *domain.Todo) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	if _, exists := s.todos[todo.ID]; !exists {
+	if _, ok := s.todos[todo.ID]; !ok {
 		return ErrNotFound
 	}
 
-	todo.UpdatedAt = time.Now()
 	s.todos[todo.ID] = todo
 
 	return nil
 }
 
-// Delete removes a todo by ID.
-func (s *MemoryStore) Delete(ctx context.Context, id string) error {
+func (s *MemoryStore) Delete(_ context.Context, id string) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	if _, exists := s.todos[id]; !exists {
+	if _, ok := s.todos[id]; !ok {
 		return ErrNotFound
 	}
 

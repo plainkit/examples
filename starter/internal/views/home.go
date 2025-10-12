@@ -1,53 +1,124 @@
 package views
 
 import (
+	"fmt"
+
 	. "github.com/plainkit/html"
+
+	"github.com/plainkit/bloxui/examples/starter/internal/domain"
 )
 
-// HomePage renders the home page.
-func HomePage() string {
-	content := Div(
-		AClass("space-y-12 max-w-3xl mx-auto px-6 py-12"),
-		Div(
-			H2(
-				AClass("text-5xl font-extrabold tracking-tight bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent mb-6"),
-				T("Welcome to PlainKit Starter"),
-			),
-			P(
-				AClass("text-lg text-muted-foreground leading-relaxed"),
-				T("This is a minimal starter template for building web applications with Go and PlainKit."),
-			),
-		),
-		Div(
-			AClass("space-y-5"),
-			H3(AClass("text-2xl font-semibold text-foreground border-b border-border pb-2"), T("Features")),
-			Ul(
-				AClass("list-disc list-inside space-y-2 text-base text-muted-foreground ml-4"),
-				Li(T("Clean architecture with separated concerns")),
-				Li(T("In-memory data store (easy to swap for a database)")),
-				Li(T("Type-safe HTML generation with PlainKit")),
-				Li(T("Tailwind CSS for styling")),
-				Li(T("Integration tests with Testify")),
-			),
-		),
-		Div(
-			AClass("space-y-5 pt-4"),
-			H3(AClass("text-2xl font-semibold text-foreground border-b border-border pb-2"), T("Quick Links")),
+func HomePage(todos []*domain.Todo) string {
+	var items []Node
+
+	for _, todo := range todos {
+		var checkboxChildren []Component
+		if todo.Completed {
+			checkboxChildren = append(checkboxChildren, Span(AClass("checkbox__indicator")))
+		}
+
+		statusClass := "todo-card"
+		if todo.Completed {
+			statusClass += " todo-card--done"
+		}
+
+		items = append(items, Article(
+			AClass(statusClass),
 			Div(
-				AClass("flex gap-4"),
-				A(
-					AHref("/todos"),
-					AClass("inline-block px-6 py-3 rounded-lg bg-primary text-primary-foreground font-semibold shadow hover:shadow-lg hover:-translate-y-0.5 transition"),
-					T("View Todos"),
+				AClass("todo-card__main"),
+				Form(
+					AMethod("post"),
+					AAction(fmt.Sprintf("/todos/%s/toggle", todo.ID)),
+					Button(
+						AClass("todo-card__toggle"),
+						AType("submit"),
+						Span(
+							AClass("checkbox"),
+							Fragment(checkboxChildren...),
+						),
+						Span(
+							AClass("visually-hidden"),
+							T(fmt.Sprintf("Toggle completion for %s", todo.Title)),
+						),
+					),
 				),
-				A(
-					AHref("/health"),
-					AClass("inline-block px-6 py-3 rounded-lg border border-border text-foreground font-medium hover:bg-muted transition"),
-					T("Health Check"),
+				Div(
+					AClass("todo-card__content"),
+					H3(AClass("todo-card__title"), T(todo.Title)),
 				),
+			),
+			Form(
+				AClass("todo-card__actions"),
+				AMethod("post"),
+				AAction(fmt.Sprintf("/todos/%s/delete", todo.ID)),
+				Button(
+					AClass("ghost-button"),
+					AType("submit"),
+					T("Remove"),
+				),
+			),
+		))
+	}
+
+	var listBody Node
+	if len(todos) == 0 {
+		listBody = Div(
+			AClass("empty"),
+			P(T("You have a clean slate. Add your first task.")),
+		)
+	} else {
+		listBody = Div(
+			AClass("todo-list"),
+			Fragment(itemsToComponents(items)...),
+		)
+	}
+
+	layout := Layout(
+		"Tasks",
+		Main(
+			AClass("shell"),
+			Header(
+				AClass("shell__header"),
+				Div(
+					AClass("hero"),
+					Span(AClass("hero__tag"), T("plainkit")),
+					H1(AClass("hero__title"), T("Tasks")),
+					P(AClass("hero__subtitle"), T("A sleek todo list focused on clarity.")),
+				),
+				Form(
+					AClass("new-todo"),
+					AMethod("post"),
+					AAction("/todos"),
+					Input(
+						AClass("new-todo__input"),
+						AType("text"),
+						AName("title"),
+						APlaceholder("Type your next win"),
+						AAutocomplete("off"),
+						ARequired(),
+					),
+					Button(
+						AClass("primary-button"),
+						AType("submit"),
+						T("Add"),
+					),
+				),
+			),
+			Section(
+				AClass("card"),
+				listBody,
 			),
 		),
 	)
 
-	return Layout("Home", content)
+	return layout
+}
+
+func itemsToComponents(items []Node) []Component {
+	components := make([]Component, 0, len(items))
+	for _, item := range items {
+		components = append(components, item)
+	}
+
+	return components
 }

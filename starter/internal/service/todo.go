@@ -1,106 +1,71 @@
-// Package service contains business logic and orchestration.
-// Services validate input, enforce business rules, and coordinate between stores.
 package service
 
 import (
 	"context"
 	"errors"
-	"fmt"
 	"strings"
 	"time"
 
-	"starter/internal/domain"
-	"starter/internal/store"
+	"github.com/google/uuid"
+
+	"github.com/plainkit/bloxui/examples/starter/internal/domain"
+	"github.com/plainkit/bloxui/examples/starter/internal/store"
 )
 
-// TodoService handles todo business logic.
-type TodoService struct {
+var (
+	ErrTitleRequired = errors.New("title is required")
+)
+
+type Todo struct {
 	store store.TodoStore
 }
 
-// NewTodoService creates a new todo service.
-func NewTodoService(store store.TodoStore) *TodoService {
-	return &TodoService{store: store}
+func NewTodoService(s store.TodoStore) *Todo {
+	return &Todo{store: s}
 }
 
-// CreateTodoInput represents input for creating a todo.
 type CreateTodoInput struct {
 	Title string
 }
 
-// Create validates input and creates a new todo.
-func (s *TodoService) Create(ctx context.Context, input CreateTodoInput) (*domain.Todo, error) {
-	// Validation
-	if strings.TrimSpace(input.Title) == "" {
-		return nil, errors.New("title is required")
+func (t *Todo) Create(ctx context.Context, input CreateTodoInput) (*domain.Todo, error) {
+	title := strings.TrimSpace(input.Title)
+	if title == "" {
+		return nil, ErrTitleRequired
 	}
 
-	// Business logic: generate ID
-	id := generateID()
-
-	// Create todo entity
+	now := time.Now().UTC()
 	todo := &domain.Todo{
-		ID:        id,
-		Title:     input.Title,
+		ID:        uuid.NewString(),
+		Title:     title,
 		Completed: false,
+		CreatedAt: now,
+		UpdatedAt: now,
 	}
 
-	// Persist
-	if err := s.store.Create(ctx, todo); err != nil {
+	if err := t.store.Create(ctx, todo); err != nil {
 		return nil, err
 	}
 
 	return todo, nil
 }
 
-// List retrieves all todos.
-func (s *TodoService) List(ctx context.Context) ([]*domain.Todo, error) {
-	return s.store.List(ctx)
-}
-
-// Get retrieves a todo by ID.
-func (s *TodoService) Get(ctx context.Context, id string) (*domain.Todo, error) {
-	return s.store.Get(ctx, id)
-}
-
-// UpdateTodoInput represents input for updating a todo.
-type UpdateTodoInput struct {
-	Title     string
-	Completed bool
-}
-
-// Update validates input and updates an existing todo.
-func (s *TodoService) Update(ctx context.Context, id string, input UpdateTodoInput) (*domain.Todo, error) {
-	// Validation
-	if strings.TrimSpace(input.Title) == "" {
-		return nil, errors.New("title is required")
-	}
-
-	// Get existing todo
-	todo, err := s.store.Get(ctx, id)
+func (t *Todo) Toggle(ctx context.Context, id string) error {
+	todo, err := t.store.Get(ctx, id)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	// Update fields
-	todo.Title = input.Title
-	todo.Completed = input.Completed
+	todo.Completed = !todo.Completed
+	todo.UpdatedAt = time.Now().UTC()
 
-	// Persist
-	if err := s.store.Update(ctx, todo); err != nil {
-		return nil, err
-	}
-
-	return todo, nil
+	return t.store.Update(ctx, todo)
 }
 
-// Delete removes a todo by ID.
-func (s *TodoService) Delete(ctx context.Context, id string) error {
-	return s.store.Delete(ctx, id)
+func (t *Todo) Delete(ctx context.Context, id string) error {
+	return t.store.Delete(ctx, id)
 }
 
-// generateID creates a unique ID for a todo.
-// In production, use a proper ID generator (UUID, ULID, etc.)
-func generateID() string {
-	return fmt.Sprintf("%d", time.Now().UnixNano())
+func (t *Todo) List(ctx context.Context) ([]*domain.Todo, error) {
+	return t.store.List(ctx)
 }

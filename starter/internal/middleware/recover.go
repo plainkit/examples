@@ -5,12 +5,11 @@ import (
 	"net/http"
 )
 
-// Recover recovers from panics and returns a 500 error.
 func Recover(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
-			if err := recover(); err != nil {
-				log.Printf("panic: %v", err)
+			if rec := recover(); rec != nil {
+				log.Printf("panic: %v", rec)
 				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			}
 		}()
